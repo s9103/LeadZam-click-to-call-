@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LeadZam CRM – Click-to-Call demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>LeadZam <span>CRM</span></h1>
+      <p>Click-to-Call demo</p>
+    </header>
+
+    <main>
+      <section class="panel" aria-labelledby="device-title">
+        <h2 id="device-title">Android device</h2>
+        <div id="device-status" class="device-status" role="status"></div>
+        <details class="manual">
+          <summary>Register a device manually (paste its FCM token)</summary>
+          <form id="device-form" novalidate>
+            <label for="device-token">FCM registration token</label>
+            <textarea id="device-token" rows="3" autocomplete="off" spellcheck="false"></textarea>
+            <label for="device-name">Device name (optional)</label>
+            <input id="device-name" type="text" maxlength="60" autocomplete="off" />
+            <p id="device-form-error" class="field-error" role="alert"></p>
+            <button type="submit" class="btn">Save device</button>
+          </form>
+        </details>
+      </section>
+
+      <section aria-labelledby="leads-title">
+        <h2 id="leads-title">Leads</h2>
+        <ul id="leads" class="leads"></ul>
+      </section>
+
+      <section aria-labelledby="history-title">
+        <h2 id="history-title">Recent call requests</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Time</th>
+                <th scope="col">Contact</th>
+                <th scope="col">Number</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody id="history"></tbody>
+          </table>
+        </div>
+        <p id="history-empty" class="muted">No call requests yet.</p>
+      </section>
+    </main>
+
+    <div id="live-region" class="sr-only" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
