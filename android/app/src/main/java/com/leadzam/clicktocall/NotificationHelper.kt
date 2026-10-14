@@ -109,11 +109,16 @@ object NotificationHelper {
         postSummaryIfNeeded(context, manager)
     }
 
-    /** With several requests waiting, group them under one summary instead of flooding the shade. */
+        /** Group multiple pending requests into one summary notification. */
     @SuppressLint("MissingPermission")
     private fun postSummaryIfNeeded(context: Context, manager: NotificationManagerCompat) {
         val pending = DialRequestRepository.pendingCount(context)
-        if (pending < 2) return
+
+        if (pending < 2) {
+            manager.cancel(SUMMARY_ID)
+            return
+        }
+
         val summary = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(context.getString(R.string.notification_title))
@@ -123,19 +128,24 @@ object NotificationHelper {
             .setAutoCancel(true)
             .setContentIntent(
                 PendingIntent.getActivity(
-                    context, 0,
+                    context,
+                    0,
                     Intent(context, MainActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                            Intent.FLAG_ACTIVITY_SINGLE_TOP
                     },
                     PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
                 ),
             )
             .build()
+
         manager.notify(SUMMARY_ID, summary)
     }
 
     fun cancel(context: Context, requestId: String) {
-        NotificationManagerCompat.from(context).cancel(notificationId(requestId))
+        val manager = NotificationManagerCompat.from(context)
+        manager.cancel(notificationId(requestId))
+        postSummaryIfNeeded(context, manager)
     }
 
     fun cancelAll(context: Context) {

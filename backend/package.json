@@ -6,7 +6,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "start:mock": "FCM_MODE=mock node src/server.js",
+    "start:mock": "set FCM_MODE=mock&& node src/server.js",
     "dev": "node --watch src/server.js",
     "test": "node --test"
   },
