@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.LeadZam" parent="Theme.Material3.DayNight.NoActionBar" />
+
+    <!-- Fully transparent, used by the invisible DialTrampolineActivity. -->
+    <style name="Theme.LeadZam.Trampoline" parent="@android:style/Theme.Translucent.NoTitleBar" />
+</resources>
