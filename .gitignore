@@ -1,0 +1,33 @@
+# ---- Secrets (NEVER commit these) ----
+.env
+.env.*
+!.env.example
+backend/secrets/
+**/serviceAccount*.json
+**/*-firebase-adminsdk-*.json
+**/service-account*.json
+android/app/google-services.json
+
+# ---- Backend ----
+node_modules/
+backend/data/
+npm-debug.log*
+
+# ---- Android / Gradle ----
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/captures/
+android/.externalNativeBuild/
+android/.cxx/
+*.apk
+*.aab
+*.iml
+.idea/
+.gradle/
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+.vscode/
