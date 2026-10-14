@@ -1,0 +1,19 @@
+{
+  "_comment": "This is only a SHAPE EXAMPLE. Download the real file from Firebase console > Project settings > Your apps > Android (package name: com.leadzam.clicktocall) and save it as android/app/google-services.json. The real file is git-ignored.",
+  "project_info": {
+    "project_number": "000000000000",
+    "project_id": "your-firebase-project-id",
+    "storage_bucket": "your-firebase-project-id.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:000000000000:android:0000000000000000",
+        "android_client_info": { "package_name": "com.leadzam.clicktocall" }
+      },
+      "api_key": [{ "current_key": "REPLACE_ME" }],
+      "services": { "appinvite_service": { "other_platform_oauth_client": [] } }
+    }
+  ],
+  "configuration_version": "1"
+}
