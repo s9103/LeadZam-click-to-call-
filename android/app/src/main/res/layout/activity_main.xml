@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:fillViewport="true">
 
     <LinearLayout
@@ -34,28 +36,52 @@
             android:text="@string/section_device"
             android:textAppearance="?attr/textAppearanceTitleMedium" />
 
+        <!-- Collapsible FCM token details -->
         <TextView
+            android:id="@+id/tvDeviceDetailsToggle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/label_token"
-            android:textAppearance="?attr/textAppearanceLabelMedium" />
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:minHeight="48dp"
+            android:paddingHorizontal="12dp"
+            android:text="Device Details  ▼"
+            android:textAppearance="?attr/textAppearanceTitleSmall" />
 
-        <TextView
-            android:id="@+id/tvToken"
+        <LinearLayout
+            android:id="@+id/layoutDeviceDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:maxLines="4"
-            android:textIsSelectable="true"
-            android:textSize="12sp" />
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        <Button
-            android:id="@+id/btnCopyToken"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/action_copy_token" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/label_token"
+                android:textAppearance="?attr/textAppearanceLabelMedium" />
+
+            <TextView
+                android:id="@+id/tvToken"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:maxLines="4"
+                android:textIsSelectable="true"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btnCopyToken"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_copy_token" />
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/etBackendUrl"
@@ -109,5 +135,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:nestedScrollingEnabled="false" />
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

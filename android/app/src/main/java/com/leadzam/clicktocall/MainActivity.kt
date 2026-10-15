@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
+import android.widget.LinearLayout
+import androidx.core.view.WindowCompat
 
 /**
  * Single screen: device registration at the top, received CRM call requests below.
@@ -44,33 +46,53 @@ class MainActivity : AppCompatActivity() {
     private val notificationPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { updateNotificationWarning() }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+   override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
 
-        tokenText = findViewById(R.id.tvToken)
-        registerStatus = findViewById(R.id.tvRegisterStatus)
-        notificationWarning = findViewById(R.id.tvNotifWarning)
-        emptyText = findViewById(R.id.tvEmpty)
-        backendUrlInput = findViewById(R.id.etBackendUrl)
-        deviceNameInput = findViewById(R.id.etDeviceName)
+    WindowCompat.setDecorFitsSystemWindows(window, true)
 
-        backendUrlInput.setText(Settings.backendUrl(this) ?: Settings.DEFAULT_BACKEND_URL)
-        deviceNameInput.setText(Settings.deviceName(this))
+    setContentView(R.layout.activity_main)
 
-        adapter = RequestAdapter(onCall = ::callRequest, onDismiss = ::dismissRequest)
-        findViewById<RecyclerView>(R.id.rvRequests).apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = this@MainActivity.adapter
-        }
+    tokenText = findViewById(R.id.tvToken)
+    registerStatus = findViewById(R.id.tvRegisterStatus)
+    notificationWarning = findViewById(R.id.tvNotifWarning)
+    emptyText = findViewById(R.id.tvEmpty)
+    backendUrlInput = findViewById(R.id.etBackendUrl)
+    deviceNameInput = findViewById(R.id.etDeviceName)
 
-        findViewById<Button>(R.id.btnCopyToken).setOnClickListener { copyToken() }
-        findViewById<Button>(R.id.btnRegister).setOnClickListener { registerWithBackend() }
+    backendUrlInput.setText(Settings.backendUrl(this) ?: Settings.DEFAULT_BACKEND_URL)
+    deviceNameInput.setText(Settings.deviceName(this))
 
-        NotificationHelper.ensureChannel(this)
-        requestNotificationPermissionIfNeeded()
-        loadToken()
+    val deviceDetailsToggle: TextView =
+        findViewById(R.id.tvDeviceDetailsToggle)
+
+    val deviceDetailsLayout: LinearLayout =
+        findViewById(R.id.layoutDeviceDetails)
+
+    deviceDetailsToggle.setOnClickListener {
+        val expanded = deviceDetailsLayout.visibility == View.VISIBLE
+
+        deviceDetailsLayout.visibility =
+            if (expanded) View.GONE else View.VISIBLE
+
+        deviceDetailsToggle.text =
+            if (expanded) "Device Details  ▼" else "Device Details  ▲"
     }
+
+    adapter = RequestAdapter(onCall = ::callRequest, onDismiss = ::dismissRequest)
+
+    findViewById<RecyclerView>(R.id.rvRequests).apply {
+        layoutManager = LinearLayoutManager(this@MainActivity)
+        adapter = this@MainActivity.adapter
+    }
+
+    findViewById<Button>(R.id.btnCopyToken).setOnClickListener { copyToken() }
+    findViewById<Button>(R.id.btnRegister).setOnClickListener { registerWithBackend() }
+
+    NotificationHelper.ensureChannel(this)
+    requestNotificationPermissionIfNeeded()
+    loadToken()
+}
 
     override fun onStart() {
         super.onStart()
